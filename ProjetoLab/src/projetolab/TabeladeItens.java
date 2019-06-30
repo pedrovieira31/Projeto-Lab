@@ -1,0 +1,435 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package projetolab;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+
+/**
+ *
+ * @author dolva
+ */
+public final class TabeladeItens extends javax.swing.JInternalFrame {
+        
+        public void LoadTableMoto(){
+            System.out.println("LOAD MOTORISTA");
+            Object Coluns1 [] = {"Nome", "Idade", "CPF", "Endereço", "E-mail","Telefone",  "Habilitação", "Placa do Veículo"};
+            DefaultTableModel modelo1 = new DefaultTableModel(Coluns1,0);
+            Conexao con = new Conexao();
+            String stgg = "SELECT * FROM public.\"Motorista\"";
+            
+                try {
+                    con.Conectar();
+                    ResultSet result = con.selectBanco(stgg);
+                    while(result.next()){
+                        Object linha1[];
+                        linha1 = new Object []{result.getString(1),result.getString(2),result.getString(3),result.getString(4),result.getString(5),result.getString(6),result.getString(7),result.getString(8)};
+                        modelo1.addRow(linha1);
+                    }
+                } catch (SQLException ex) {
+                   Logger.getLogger(TabeladeItens.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            tab_moto.setModel(modelo1);
+        }
+        public void LoadTableVeic(){
+            System.out.println("LOAD VEICULO");
+             
+            Object Coluns2 [] = {"Modelo", "Placa", "Ano", "Combustívell", "Motor"};
+            DefaultTableModel modelo2 = new DefaultTableModel(Coluns2,0);
+            Conexao con = new Conexao();
+            String stgg = "SELECT * FROM public.\"Veiculo\"";
+            
+                try {
+                    con.Conectar();
+                    ResultSet result = con.selectBanco(stgg);
+                    while(result.next()){
+                        Object linha2[];
+                        linha2 = new Object []{result.getString(1),result.getString(2),result.getString(3),result.getString(4),result.getString(5)};
+                        modelo2.addRow(linha2);
+                    }
+                } catch (SQLException ex) {
+                   Logger.getLogger(TabeladeItens.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            tab_veic.setModel(modelo2);
+        }
+        
+        public void verViagem(){
+            Conexao con = new Conexao();
+            String stgg = "SELECT * FROM public.\"Viagem\"";
+            con.Conectar();
+            
+            ResultSet result = con.selectBanco(stgg);
+        try {
+            while (result.next()) {
+                System.out.println(result.getString(1)+ " " + result.getString(2)+ " " + result.getString(3)+ " " + result.getString(4)+" "+result.getString(5));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex);
+        }
+            
+        }
+        
+        public void LoadTableVia() throws SQLException{
+            System.out.println("LOAD VIAGEM");
+            Object Coluns3 [] = {"Hora de Partida", "Hora de Chegada","ID", "Placa do Veículo","Valor Final"};
+            DefaultTableModel modelo3 = new DefaultTableModel(Coluns3,0);
+            Conexao con = new Conexao();
+            String stgg = "SELECT * FROM public.\"Viagem\"";
+                try {
+                    con.Conectar();
+                    ResultSet result = con.selectBanco(stgg);
+                    while(result.next()){
+                        Object linha3[];
+                        linha3 = new Object []{result.getString(1),result.getString(2),result.getString(3),result.getString(4),result.getString(5)};
+                        modelo3.addRow(linha3);
+                    }
+                } catch (SQLException ex) {
+                   Logger.getLogger(TabeladeItens.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                tab_via.setModel(modelo3);
+            }
+        
+    public TabeladeItens() {
+        initComponents();
+        but_tab_ex.setEnabled(false);
+        but_tab_at.setEnabled(false);
+        but_desmarcar.setEnabled(false);
+        Conexao con = new Conexao();
+        LoadTableMoto();
+        LoadTableVeic();
+            try {
+                LoadTableVia();
+            } catch (SQLException ex) {
+                Logger.getLogger(TabeladeItens.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        verViagem();
+    }
+    
+    
+    
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        tab_geral = new javax.swing.JTabbedPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tab_via = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tab_moto = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tab_veic = new javax.swing.JTable();
+        but_tab_at = new javax.swing.JButton();
+        but_tab_ex = new javax.swing.JButton();
+        but_desmarcar = new javax.swing.JButton();
+        check_ex = new javax.swing.JCheckBox();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Tabela Karrara Táxi");
+
+        tab_geral.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tab_geralMouseClicked(evt);
+            }
+        });
+
+        tab_via.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Hora de Partida", "Hora de Chegada", "Valor Final", "Placa do Veículo"
+            }
+        ));
+        tab_via.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tab_viaMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tab_via);
+        tab_via.getAccessibleContext().setAccessibleName("Tabela de Viagens");
+
+        tab_geral.addTab("Viagens", jScrollPane1);
+
+        tab_moto.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Nome", "Idade", "CPF", "Endereço", "Telefone", "E-mail", "Habilitação", "Vencimento Habilitação", "Placa do Veículo"
+            }
+        ));
+        tab_moto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tab_motoMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tab_moto);
+        tab_moto.getAccessibleContext().setAccessibleName("Tabela de Motoristas");
+
+        tab_geral.addTab("Motoristas", jScrollPane2);
+
+        tab_veic.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Modelo", "Ano", "Placa", "Motor", "Combustívell", "Quilometragem"
+            }
+        ));
+        tab_veic.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tab_veicMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tab_veic);
+        tab_veic.getAccessibleContext().setAccessibleName("Tabela de Veículos");
+
+        tab_geral.addTab("Veículos", jScrollPane3);
+
+        but_tab_at.setText("Atualizar");
+        but_tab_at.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                but_tab_atActionPerformed(evt);
+            }
+        });
+
+        but_tab_ex.setText("Excluir");
+        but_tab_ex.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                but_tab_exActionPerformed(evt);
+            }
+        });
+
+        but_desmarcar.setText("Desmarcar");
+        but_desmarcar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                but_desmarcarActionPerformed(evt);
+            }
+        });
+
+        check_ex.setText("Excluir dados");
+        check_ex.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                check_exMouseClicked(evt);
+            }
+        });
+        check_ex.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                check_exActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(tab_geral)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(but_tab_at, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(but_desmarcar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(check_ex)
+                    .addComponent(but_tab_ex, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(51, 51, 51))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(tab_geral, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(check_ex)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(but_tab_at)
+                    .addComponent(but_tab_ex)
+                    .addComponent(but_desmarcar))
+                .addGap(0, 13, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void tab_viaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tab_viaMouseClicked
+        
+        but_tab_at.setEnabled(true);
+        but_desmarcar.setEnabled(true);
+    }//GEN-LAST:event_tab_viaMouseClicked
+                                       
+
+    private void but_tab_atActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_tab_atActionPerformed
+        int i = tab_geral.getSelectedIndex();
+        String stg;
+        Conexao con = new Conexao();
+        con.Conectar();
+        switch (i) {
+            case 0:
+                
+                
+        {
+            try {
+                LoadTableVia();
+            } catch (SQLException ex) {
+                Logger.getLogger(TabeladeItens.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+                break;
+            case 1:
+              
+                
+                LoadTableMoto();
+                break;
+            case 2:
+
+                LoadTableVeic();
+                break;
+            default:
+                break;
+        }
+        allOff();
+    }//GEN-LAST:event_but_tab_atActionPerformed
+
+    public JTable getTab_veic() {
+        return tab_veic;
+    }
+
+    public JTable getTab_via() {
+        return tab_via;
+    }
+
+    private void but_tab_exActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_tab_exActionPerformed
+        int i = tab_geral.getSelectedIndex();
+        String stg;
+        ResultSet resultado;
+           switch (i) {
+               case 0:
+                   Conexao con =  new Conexao();
+                   con.Conectar();
+                   tab_via.removeRowSelectionInterval(tab_via.getSelectedRow(), tab_via.getSelectedColumn());
+                   stg = "DELETE FROM public.\"Viagem\"WHERE \"Placa Veiculo\" = '"+tab_via.getValueAt(tab_via.getSelectedRow(),tab_via.getSelectedColumn())+"'";
+                   System.out.println(stg);
+            try {
+                LoadTableVia();
+            } catch (SQLException ex) {
+                Logger.getLogger(TabeladeItens.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                   break;
+               case 1:
+                   tab_moto.getSelectedRow();
+                   tab_moto.getColumnModel().getColumn(3);
+                   LoadTableMoto();
+                   break;
+               case 2:
+                   tab_veic.getSelectedRow();
+                   tab_veic.getColumnModel().getColumn(3);
+                   LoadTableVeic();
+                   break;
+               default:
+                   break;
+           }
+        allOff();
+    }//GEN-LAST:event_but_tab_exActionPerformed
+
+    private void tab_motoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tab_motoMouseClicked
+        
+        algunsOn();
+        
+    }//GEN-LAST:event_tab_motoMouseClicked
+
+    private void tab_veicMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tab_veicMouseClicked
+
+        algunsOn();
+    }//GEN-LAST:event_tab_veicMouseClicked
+
+    private void tab_geralMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tab_geralMouseClicked
+        allOff();
+    }//GEN-LAST:event_tab_geralMouseClicked
+
+    private void but_desmarcarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_desmarcarActionPerformed
+        tab_moto.clearSelection();
+        tab_veic.clearSelection();
+        tab_via.clearSelection();
+        allOff();
+    }//GEN-LAST:event_but_desmarcarActionPerformed
+
+    private void check_exActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_check_exActionPerformed
+        but_desmarcar.setEnabled(true);
+        but_tab_ex.setEnabled(true);
+        
+    }//GEN-LAST:event_check_exActionPerformed
+
+    private void check_exMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_check_exMouseClicked
+        allOff();
+    }//GEN-LAST:event_check_exMouseClicked
+
+    public void allOff(){
+        but_tab_ex.setEnabled(false);
+        but_tab_at.setEnabled(false);
+        but_desmarcar.setEnabled(false);
+        check_ex.setSelected(false);
+    }
+    
+    public void algunsOn(){
+        but_desmarcar.setEnabled(true);
+        but_tab_at.setEnabled(true);
+    }
+    
+    public JTable getTab_moto() {
+        return tab_moto;
+    }
+
+    public JTabbedPane getTab_geral() {
+        return tab_geral;
+    }
+    
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton but_desmarcar;
+    private javax.swing.JButton but_tab_at;
+    private javax.swing.JButton but_tab_ex;
+    private javax.swing.JCheckBox check_ex;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTabbedPane tab_geral;
+    private javax.swing.JTable tab_moto;
+    private javax.swing.JTable tab_veic;
+    private javax.swing.JTable tab_via;
+    // End of variables declaration//GEN-END:variables
+
+    public JTabbedPane selectTab_geral(int i) {
+        tab_geral.setSelectedIndex(i);
+        return tab_geral;
+    }
+
+}
